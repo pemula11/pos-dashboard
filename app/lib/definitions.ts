@@ -56,23 +56,28 @@ export type InvoicesTable = {
 };
 
 export type CustomersTableType = {
-  id: string;
+  uid: string;
   name: string;
   email: string;
-  image_url: string;
-  total_invoices: number;
-  total_pending: number;
-  total_paid: number;
 };
 
 export type FormattedCustomersTable = {
-  id: string;
+  uid: string;
   name: string;
   email: string;
-  image_url: string;
-  total_invoices: number;
-  total_pending: string;
-  total_paid: string;
+ 
+};
+
+export type FormattedTransactionTable = {
+  uid: string;
+  transactionDate: string;
+  customer: {
+    name: string;
+    email: string;
+  }
+  
+  total: number;
+ 
 };
 
 export type CustomerField = {

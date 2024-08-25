@@ -1,32 +1,22 @@
-'use client';
 
-import { deleteUser } from '@/app/lib/customers';
 import { lusitana } from '@/app/ui/fonts';
 import Search from '@/app/ui/search';
 import {
-  CustomersTableType,
-  FormattedCustomersTable,
+  FormattedTransactionTable,
 } from '@/app/lib/definitions';
-
-export default async function CustomersTable({
-  customers,
+export default async function TransactionTable({
+  transactions,
 }: {
-  customers: FormattedCustomersTable[];
+  transactions: FormattedTransactionTable[];
 }) {
 
-  const deleteData = (uid: string) => async () => {
-    await deleteUser(uid)
-    .then((response) => {
-      
-   });
-    
-  };
+
   
   
   return (
     <div className="w-full">
       <h1 className={`${lusitana.className} mb-8 text-xl md:text-2xl`}>
-        Customers
+        Data Transaction
       </h1>
       
       <div className="mt-6 flow-root">
@@ -34,16 +24,16 @@ export default async function CustomersTable({
           <div className="inline-block min-w-full align-middle">
             <div className="overflow-hidden rounded-md bg-gray-50 p-2 md:pt-0">
               <div className="md:hidden">
-                {customers?.map((customer) => (
+                {transactions?.map((transaction) => (
                   <div
-                    key={customer.uid}
+                    key={transaction.uid}
                     className="mb-2 w-full rounded-md bg-white p-4"
                   >
                     <div className="flex items-center justify-between border-b pb-4">
                       <div>
                         
                         <p className="text-sm text-gray-500">
-                          {customer.email}
+                          {transaction.customer.name}
                         </p>
                       </div>
                     </div>
@@ -55,13 +45,13 @@ export default async function CustomersTable({
                 <thead className="rounded-md bg-gray-50 text-left text-sm font-normal">
                   <tr>
                     <th scope="col" className="px-4 py-5 font-medium sm:pl-6">
-                      Name
+                      Customer Name
                     </th>
                     <th scope="col" className="px-3 py-5 font-medium">
-                      Email
+                      Transaction Date
                     </th>
                     <th scope="col" className="px-3 py-5 font-medium">
-                      Action
+                      Total Transaction
                     </th>
                     
                     
@@ -69,17 +59,18 @@ export default async function CustomersTable({
                 </thead>
 
                 <tbody className="divide-y divide-gray-200 text-gray-900">
-                  {customers.map((customer) => (
-                    <tr key={customer.uid} className="group">
+                  {transactions.map((transaction) => (
+                    <tr key={transaction.uid} className="group">
                       <td className="whitespace-nowrap bg-white px-4 py-5 text-sm">
-                        {customer.name}
+                        {transaction.customer.name}
                       </td>
                       <td className="whitespace-nowrap bg-white px-4 py-5 text-sm">
-                        {customer.email}
+                        {new Date(transaction.transactionDate).toLocaleString()}
                       </td>
                       <td className="whitespace-nowrap bg-white px-4 py-5 text-sm">
-                        <button onClick={deleteData(customer.uid)} className="px-3 py-2 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Delete</button>
+                        {transaction.total}
                       </td>
+                      
 
                     </tr>
                   ))}
